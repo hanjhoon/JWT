@@ -24,6 +24,32 @@
 
 + 권한을 부여하기 위해 필요한 데이터가 JWT안에 모두 담겨있다.
 
++ 구성
+
+  + 헤더(header): 토큰 종류와 해시 알고리즘 정보
+  + 페이로드(payload): 토큰의 내용물이 인코딩된 부분
+  + 시그니처(signature): 일련의 문자열, 시그니처를 통해 토큰이 변조되었는지 여부를 확인  
+
+![image](https://github.com/hanjhoon/JWT/assets/121271030/d9dd478c-a352-4084-9d26-43bbe436a9b0)
+
+### Refresh Token?
+ 
++ Access Token(JWT)를 통한 인증 방식의 문제는 만일 제 3자에게 탈취당할 경우 보안에 취약하다는 점이다.
+
++ 유효기간이 짧은 Token의 경우 그만큼 사용자는 로그인을 자주 해서 새롭게 Token을 발급받아야 하므로 불편하다. 그러나 유효기간을 늘리자면, 토큰을 탈취당했을 때 보안에 더 취약해지게 된다. 
+
++ 이 때, “그러면 유효기간을 짧게 하면서  좋은 방법이 있지는 않을까?”라는 질문의 답이 바로 "Refresh Token" 이다. 
+
++ Refresh Token은 Access Token과 똑같은 형태의 JWT다. 처음에 로그인을 완료했을 때 Access Token과 동시에 발급되는 Refresh Token은 긴 유효기간을 가지면서, Access Token이 만료됐을 때 새로 발급해주는 열쇠가 된다.
+
+  + Refresh Token의 유효기간은 2주, Access Token의 유효기간은 1시간이라 하면, 사용자는 API 요청을 하다가 1시간이 지나게 되면, 가지고 있는 Access Token은 만료된다. 그러면 Refresh Token의 유효기간 전까지는 Access Token을 새롭게 발급받을 수 있다. 
+
+  + Access Token은 탈취당하면 정보가 유출되는건 동일하다. 다만 짧은 유효기간 안에만 사용이 가능하기에 더 안전하다. 
+
+  + Refresh Token의 유효기간이 만료됐다면, 사용자는 새로 로그인해야 한다. Refresh Token도 탈취될 가능성이 있기 때문에 적절한 유효기간 설정이 필요하다.
+
+
+
 ## JWT 토큰을 사용한 request 프로세스
 + JSON 객체에 요구사항을 작성
 
@@ -33,7 +59,7 @@
 
 + 서버에서는 header에 추가된 token을 디코딩하여 사용자를 인증
 
-![image](https://github.com/hanjhoon/JWT/assets/121271030/f7479239-2a2b-4cc0-973d-35ced2f9ae64)
+![image](https://github.com/hanjhoon/JWT/assets/121271030/d260cdf1-666c-42bc-a810-737d11ea0276)
 
 
 ## JWT 관리
@@ -67,8 +93,8 @@
 
 
 ## NestJS에서 jsonwebtoken 모듈 사용하기
-nest에서 JWT를 사용하기 위해서 jsonwebtoken이라는 모듈을 사용할 수 있다.
++ nest에서 JWT를 사용하기 위해서 jsonwebtoken이라는 모듈을 사용할 수 있다.
 
-JWT를 쉽게 사용하기 위해 사용하는 모듈이며 아래의 예제를 보면 JWT를 통해 로그인을 구현할 수 있다.
++ JWT를 쉽게 사용하기 위해 사용하는 모듈이며 아래의 예제를 보면 JWT를 통해 로그인을 구현할 수 있다.
 
 ## 로그인 시 토큰 관리
